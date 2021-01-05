@@ -1,5 +1,10 @@
 <template>
-   <div class="wrapper">
+   <div
+      :style="{
+         cursor: `url(${cursorUrl}), auto !important`,
+      }"
+      class="wrapper"
+   >
       <div
          v-for="(value, index) in store.targets"
          @mousedown="
@@ -65,6 +70,9 @@ import { defineEmit } from 'vue';
 import ParticleVue from './Particle.vue';
 import SlashVue from './Slash.vue';
 import store, { playRandomHit, createTarget } from '/src/gameStore';
+
+// @ts-ignore
+import cursorUrl from '/src/assets/cursor.png';
 
 const emit = defineEmit({
    targetClick: null,

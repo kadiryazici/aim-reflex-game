@@ -20,7 +20,7 @@
          <div>
             <ButtonVue
                @click="
-                  (e) => {
+                  () => {
                      store.isLost = false;
                      store.score = 0;
                      store.decreaseSpeed = 5;
@@ -45,7 +45,7 @@
 import ProgressVue from './Progress.vue';
 import ShootAreaVue from './ShootArea.vue';
 import store, { gameUpdate, createTarget } from '/src/gameStore';
-import { defineEmit, onMounted, watchEffect } from 'vue';
+import { defineEmit, onMounted, watch } from 'vue';
 import ButtonVue from './Button.vue';
 const emit = defineEmit({
    targetClick: null,
@@ -59,19 +59,22 @@ onMounted(() => {
    }, 500);
 });
 
-watchEffect(() => {
-   if (store.score > 170) {
-      gameMain!.style.animation = '.15s shaking linear infinite';
-   } else if (store.score > 130) {
-      gameMain!.style.animation = '.33s shaking linear infinite';
-   } else if (store.score > 100) {
-      gameMain!.style.animation = '.5s shaking linear infinite';
-   } else if (store.score > 70) {
-      gameMain!.style.animation = '1s shaking linear infinite';
-   } else if (store.score > 40) {
-      gameMain!.style.animation = '2s shaking linear infinite';
+watch(
+   () => store.score,
+   (val) => {
+      if (val > 170) {
+         gameMain!.style.animation = '.15s shaking linear infinite';
+      } else if (val > 130) {
+         gameMain!.style.animation = '.33s shaking linear infinite';
+      } else if (val > 100) {
+         gameMain!.style.animation = '.5s shaking linear infinite';
+      } else if (val > 70) {
+         gameMain!.style.animation = '1s shaking linear infinite';
+      } else if (val > 40) {
+         gameMain!.style.animation = '2s shaking linear infinite';
+      }
    }
-});
+);
 </script>
 
 <style lang="scss" scoped>
