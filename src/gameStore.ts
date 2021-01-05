@@ -14,7 +14,7 @@ const store = reactive({
    isBackgroundAudioMuted: false,
    progress: 100,
    decreaseSpeed: 5,
-   score: 0,
+   score: 99,
    isLost: false,
    sound: {
       hit: null as HTMLAudioElement | null,
