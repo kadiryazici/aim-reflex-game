@@ -20,14 +20,16 @@
          <div>
             <ButtonVue
                @click="
-                  () => {
+                  (e) => {
                      store.isLost = false;
                      store.score = 0;
                      store.decreaseSpeed = 5;
                      store.progress = 100;
                      gameUpdate();
                      createTarget();
-                     gameMain.style.animation = 'none';
+                     if (gameMain) {
+                        gameMain.style.animation = 'none';
+                     }
                   }
                "
                v-if="store.isLost"
@@ -58,15 +60,15 @@ onMounted(() => {
 });
 
 watchEffect(() => {
-   if (store.score > 250) {
+   if (store.score > 170) {
       gameMain!.style.animation = '.15s shaking linear infinite';
-   } else if (store.score > 200) {
+   } else if (store.score > 130) {
       gameMain!.style.animation = '.33s shaking linear infinite';
-   } else if (store.score > 150) {
-      gameMain!.style.animation = '.5s shaking linear infinite';
    } else if (store.score > 100) {
+      gameMain!.style.animation = '.5s shaking linear infinite';
+   } else if (store.score > 70) {
       gameMain!.style.animation = '1s shaking linear infinite';
-   } else if (store.score > 50) {
+   } else if (store.score > 40) {
       gameMain!.style.animation = '2s shaking linear infinite';
    }
 });

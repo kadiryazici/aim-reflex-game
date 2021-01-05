@@ -5,7 +5,7 @@
       "dev": "vite",
       "build": "vite build",
       "deploy": "npm run build && firebase deploy",
-      "b:d:p": "yarn build && firebase deploy && git add . && git commit -m 'difficulty increased' && git push origin main"
+      "b:d:p": "yarn build && firebase deploy && git add . && git commit -m \"difficulty increased\" && git push origin main"
    },
    "dependencies": {
       "typescript": "^4.1.3",
