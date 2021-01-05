@@ -108,7 +108,7 @@ body {
       transform: translateX(-1px) translateY(2px);
    }
    60% {
-      transform: translateX(-2px) translateY(-1px);
+      transform: translateX(-2px) translateY(-4px);
    }
    75% {
       transform: translateX(2px) translateY(-3px);

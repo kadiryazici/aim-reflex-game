@@ -6,12 +6,6 @@ import {
 } from 'vue-router';
 import { UnwrapRef, VNode } from 'vue';
 
-declare module '@vue/runtime-core' {
-   interface ComponentCustomProperties {
-      $log: typeof console.log;
-   }
-}
-
 declare global {
    interface __VLS_GlobalComponents {
       RouterLink: typeof RouterLink & {
@@ -37,8 +31,15 @@ declare module 'vue' {
    }
 }
 
-declare global {
-   interface Window {
-      circleSelect: (el: HTMLDivElement, id: string) => void;
-   }
+declare module '*.png' {
+   const value: string;
+   export default value;
+}
+declare module '*.mp3' {
+   const value: string;
+   export default value;
+}
+declare module '*.wav' {
+   const value: string;
+   export default value;
 }

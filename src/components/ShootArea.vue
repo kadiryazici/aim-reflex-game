@@ -3,7 +3,7 @@
       :style="{
          cursor: `url(${cursorUrl}), auto !important`,
       }"
-      class="wrapper"
+      class="shoot-wrapper"
    >
       <div
          v-for="(value, index) in store.targets"
@@ -17,6 +17,7 @@
                emit('targetClick');
                store.slashes.push(value);
                store.particles.push(value);
+               createParticle(value);
             }
          "
          @touchstart="
@@ -29,6 +30,7 @@
                emit('targetClick');
                store.slashes.push(value);
                store.particles.push(value);
+               createParticle(value);
             }
          "
          :style="{
@@ -52,7 +54,7 @@
          :key="index"
          v-for="(val, index) in store.slashes"
       />
-      <ParticleVue
+      <!-- <ParticleVue
          :style="{
             left: val.x + '%',
             top: val.y + '%',
@@ -61,7 +63,7 @@
          :index="index"
          :key="index"
          v-for="(val, index) in store.particles"
-      />
+      /> -->
    </div>
 </template>
 
@@ -69,10 +71,13 @@
 import { defineEmit } from 'vue';
 import ParticleVue from './Particle.vue';
 import SlashVue from './Slash.vue';
-import store, { playRandomHit, createTarget } from '/src/gameStore';
-
-// @ts-ignore
+import store, {
+   playRandomHit,
+   createTarget,
+   createParticle,
+} from '/src/gameStore';
 import cursorUrl from '/src/assets/cursor.png';
+import ButtonVue from './Button.vue';
 
 const emit = defineEmit({
    targetClick: null,
@@ -83,7 +88,7 @@ const log = (e: MouseEvent) => console.log(e);
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
+.shoot-wrapper {
    width: 500px;
    height: 500px;
    border: 4px solid var(--yellow);
@@ -93,7 +98,7 @@ const log = (e: MouseEvent) => console.log(e);
    margin: 0 auto;
 }
 @media screen and (max-width: 750px) {
-   .wrapper {
+   .shoot-wrapper {
       width: 275px;
       height: 275px;
       margin-top: 15px;

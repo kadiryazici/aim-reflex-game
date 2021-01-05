@@ -1,0 +1,77 @@
+.particle {
+   width: 35px;
+   height: 35px;
+   display: inline-flex;
+   flex-wrap: wrap;
+   position: absolute;
+   z-index: 400;
+   flex-direction: row;
+   pointer-events: none;
+   transform: rotate(20deg);
+   div {
+      // pointer-events: none;
+      width: 50% !important;
+      box-shadow: 0px 0px 15px 1px var(--purple);
+      height: 50% !important;
+      background-color: var(--purple);
+      transform: translate(0px) scale(0.5);
+      opacity: 1;
+      transition: all 1s;
+      position: relative;
+      pointer-events: none;
+   }
+
+   &.active div:nth-child(1) {
+      animation: 1s ch1 linear forwards;
+   }
+   &.active div:nth-child(2) {
+      animation: 1s ch2 linear forwards;
+   }
+   &.active div:nth-child(3) {
+      animation: 1s ch3 linear forwards;
+   }
+   &.active div:nth-child(4) {
+      animation: 1s ch4 linear forwards;
+   }
+}
+
+@keyframes ch1 {
+   0% {
+      transform: translate(0px) scale(0.5);
+      opacity: 1;
+   }
+   100% {
+      transform: translate(-86px, -206px) scale(0.5);
+      opacity: 0;
+   }
+}
+@keyframes ch2 {
+   0% {
+      transform: translate(0px) scale(0.5);
+      opacity: 1;
+   }
+   100% {
+      transform: translate(166px, -186px) scale(0.5);
+      opacity: 0;
+   }
+}
+@keyframes ch3 {
+   0% {
+      transform: translate(0px) scale(0.5);
+      opacity: 1;
+   }
+   100% {
+      transform: translate(-84px, +136px) scale(0.5);
+      opacity: 0;
+   }
+}
+@keyframes ch4 {
+   0% {
+      transform: translate(0px) scale(0.5);
+      opacity: 1;
+   }
+   100% {
+      transform: translate(66px, 150px) scale(0.5);
+      opacity: 0;
+   }
+}

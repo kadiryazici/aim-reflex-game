@@ -7,6 +7,8 @@ import hit from './assets/hit.wav';
 import hit1 from './assets/hit1.wav';
 // @ts-expect-error
 import hit2 from './assets/hit2.wav';
+// @ts-expect-error
+import hit3 from './assets/hit3.wav';
 
 const store = reactive({
    isGameStarted: false,
@@ -20,6 +22,7 @@ const store = reactive({
       hit: null as HTMLAudioElement | null,
       hit1: null as HTMLAudioElement | null,
       hit2: null as HTMLAudioElement | null,
+      hit3: null as HTMLAudioElement | null,
       fail: '',
    },
    targets: [] as { x: number; y: number }[],
@@ -48,21 +51,24 @@ const getBlobUrl = async (url: string) => {
    store.sound.hit = new Audio(await getBlobUrl(hit));
    store.sound.hit1 = new Audio(await getBlobUrl(hit1));
    store.sound.hit2 = new Audio(await getBlobUrl(hit2));
+   store.sound.hit3 = new Audio(await getBlobUrl(hit3));
 })();
 
 export const playRandomHit = () => {
    const random = Math.random();
-   if (random < 0.33) {
+   if (random < 0.25) {
       store.sound.hit!.currentTime = 0;
       store.sound.hit?.play();
-   } else if (random < 0.66) {
+   } else if (random < 0.5) {
       store.sound.hit1!.currentTime = 0;
       store.sound.hit1?.play();
-   } else {
+   } else if (random < 0.75) {
       store.sound.hit2!.currentTime = 0;
       store.sound.hit2?.play();
+   } else {
+      store.sound.hit3!.currentTime = 0;
+      store.sound.hit3?.play();
    }
-   console.log({ random });
 };
 
 // OYUNUN SÜRE AZALTMA MEKANİZMASI
@@ -81,13 +87,13 @@ export const gameUpdate = () => {
       '15:10',
       '35:25',
       '50:45',
-      '75:70',
-      '100:100',
-      '120:125',
-      '150:140',
-      '180:160',
-      '200:175',
-      '230:190',
+      '75:60',
+      '100:85',
+      '120:100',
+      '150:120',
+      '180:145',
+      '200:165',
+      '230:185',
       '260:200',
       '290:210',
       '320:220',
@@ -116,6 +122,36 @@ export const createTarget = () => {
       x,
       y,
    });
+};
+
+export const createParticle = ({ x, y }: { x: number; y: number }): void => {
+   const html = `
+   <div class="mr-5 particle">
+      <div></div><div></div><div></div><div></div>
+   </div>
+   `;
+
+   const parent = document.createElement('div');
+   parent.className = 'mr-5 particle';
+   const transitionDiv = document.createElement('div');
+   parent.insertAdjacentElement('afterbegin', transitionDiv);
+   parent.insertAdjacentHTML('beforeend', '<div></div><div></div><div></div>');
+
+   parent.style.left = x + '%';
+   parent.style.top = y + '%';
+   parent.style.transform = `rotate(${Math.random() * (110 - -110) + -110}deg)`;
+
+   console.log(parent.style.transform);
+
+   const areaWrapper = document.querySelector('.shoot-wrapper');
+   areaWrapper?.appendChild(parent);
+
+   setTimeout(() => {
+      parent.classList.add('active');
+      setTimeout(() => {
+         parent.remove();
+      }, 1000);
+   }, 20);
 };
 
 export default store;
