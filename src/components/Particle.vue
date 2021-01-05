@@ -17,7 +17,7 @@ const props = defineProps<{ index: number }>();
 ref: isActive = false;
 setTimeout(() => {
    isActive = true;
-}, 1);
+}, 25);
 </script>
 
 <style lang="scss" scoped>
