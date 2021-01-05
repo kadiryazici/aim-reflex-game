@@ -65,6 +65,8 @@ watchEffect(() => {
       gameMain!.style.animation = '.5s shaking linear infinite';
    } else if (store.score > 100) {
       gameMain!.style.animation = '1s shaking linear infinite';
+   } else if (store.score > 0) {
+      gameMain!.style.animation = '';
    }
 });
 </script>
