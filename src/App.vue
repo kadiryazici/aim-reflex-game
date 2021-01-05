@@ -1,12 +1,15 @@
 <template>
-   <div class="appmain" ref="appmain" style="width: 100vw; height: 100vh">
+   <div
+      class="appmain d-flex align-items-center"
+      ref="appmain"
+      style="width: 100vw; height: 100vh"
+   >
       <StartVue v-if="!store.isGameStarted" />
       <GameVue
          @targetClick="shake"
          class="anim-onstart-reverse"
          v-if="store.isGameStarted"
       />
-      <audio ref="audio" />
    </div>
 </template>
 
@@ -14,13 +17,10 @@
 import GameVue from './components/Game.vue';
 import StartVue from './components/Start.vue';
 import store from './gameStore';
-import { watchEffect } from 'vue';
 
 ref: appmain = null as null | HTMLDivElement;
-ref: audio = null as null | HTMLAudioElement;
 const shake = () => {
    const el = appmain!;
-   store.backgroundAudio = audio!;
    el.style.animation = 'shaking .300s linear';
 
    setTimeout(() => {
@@ -30,9 +30,6 @@ const shake = () => {
 </script>
 
 <style lang="scss">
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-@import url(https://fonts.googleapis.com/css2?family=VT323&display=swap);
-
 :root {
    --dark: #000;
    --yellow: #fbff00;

@@ -1,6 +1,6 @@
 <template>
    <div
-      class="game-wrapper d-flex h-100 w-100 p-3 align-items-center flex-wrap"
+      class="game-wrapper d-flex h-100 mx-auto w-100 p-3 align-items-center flex-wrap"
       ref="gameMain"
    >
       <div class="mx-auto w-100">
@@ -70,4 +70,9 @@ watchEffect(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.game-wrapper {
+   max-width: 1150px;
+   max-height: 950px;
+}
+</style>
