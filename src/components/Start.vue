@@ -18,7 +18,7 @@ const startGame = async () => {
 <template>
   <div class="d-flex align-items-center justify-content-center start-main">
     <div :class="['position-relative start-wrapper', { onstart: starting }]">
-      <ButtonVue @click="startGame">BAŞLA</ButtonVue>
+      <ButtonVue @click="startGame">START</ButtonVue>
     </div>
   </div>
 </template>
