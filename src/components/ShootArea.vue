@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 import SlashVue from './Slash.vue';
 import store, { playRandomHit, createTarget, createParticle } from '/src/gameStore';
-import cursorUrl from '/src/assets/cursor.png';
-import { computed, onMounted } from 'vue';
-
-const cursorURL = computed(() => cursorUrl); // Needed for css
+import { onMounted } from 'vue';
 
 const emit = defineEmits<{
   (e: 'targetClick'): void;
@@ -68,7 +65,6 @@ function handleClick() {
   overflow: hidden;
   position: relative;
   margin: 0 auto;
-  cursor: url(v-bind('cursorURL')), auto !important;
 }
 @media screen and (max-width: 750px) {
   .shoot-wrapper {
