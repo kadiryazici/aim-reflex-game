@@ -10,12 +10,7 @@ const emit = defineEmits<{
 }>();
 
 const gameMain = ref<HTMLDivElement>();
-onMounted(() => {
-  // 500 milisaniye bekleme nedenim en baştaki 500 milisaniyelik animasyon.
-  setTimeout(() => {
-    gameUpdate();
-  }, 500);
-});
+onMounted(gameUpdate);
 
 watch(
   () => store.score,
