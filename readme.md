@@ -1,1 +1,1 @@
-[DEMO](https://aimleks.web.app)
+# A reaction game

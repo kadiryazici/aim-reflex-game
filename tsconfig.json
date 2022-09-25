@@ -1,15 +1,17 @@
 {
-   "compilerOptions": {
-      "baseUrl": ".",
-      "strict": true,
-      "esModuleInterop": true,
-      "isolatedModules": true,
-      "module": "ESNext",
-      "types": ["vite"],
-      "moduleResolution": "Node",
-      "paths": {
-         "/*": ["./*"]
-      }
-   },
-   "include": ["src/**/*"]
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "/*": ["./*"]
+    }
+  },
+
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
 }

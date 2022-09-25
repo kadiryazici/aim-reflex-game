@@ -1,107 +1,80 @@
-<template>
-   <div
-      :style="{
-         cursor: `url(${cursorUrl}), auto !important`,
-      }"
-      class="shoot-wrapper"
-   >
-      <div
-         v-for="(value, index) in store.targets"
-         @mousedown="
-            () => {
-               playRandomHit();
-               store.score++;
-               store.progress = 100;
-               store.targets.splice(index, 1);
-               createTarget();
-               emit('targetClick');
-               store.slashes.push(value);
-               store.particles.push(value);
-               createParticle(value);
-            }
-         "
-         @touchstart="
-            () => {
-               playRandomHit();
-               store.score++;
-               store.progress = 100;
-               store.targets.splice(index, 1);
-               createTarget();
-               emit('targetClick');
-               store.slashes.push(value);
-               store.particles.push(value);
-               createParticle(value);
-            }
-         "
-         :style="{
-            left: value.x + '%',
-            top: value.y + '%',
-            width: '25px',
-            height: '25px',
-            backgroundColor: 'var(--purple)',
-            boxShadow: '0px 0px 18px 1px var(--purple)',
-            position: 'absolute',
-         }"
-         class="target"
-      ></div>
-      <SlashVue
-         :style="{
-            left: val.x + '%',
-            top: val.y + '%',
-            transform: `rotate(${Math.random() * (100 - -100) + -100}deg)`,
-         }"
-         :index="index"
-         :key="index"
-         v-for="(val, index) in store.slashes"
-      />
-      <!-- <ParticleVue
-         :style="{
-            left: val.x + '%',
-            top: val.y + '%',
-            transform: `rotate(${Math.random() * (180 - -180) + -180}deg)`,
-         }"
-         :index="index"
-         :key="index"
-         v-for="(val, index) in store.particles"
-      /> -->
-   </div>
-</template>
-
 <script lang="ts" setup>
-import { defineEmit } from 'vue';
-import ParticleVue from './Particle.vue';
 import SlashVue from './Slash.vue';
-import store, {
-   playRandomHit,
-   createTarget,
-   createParticle,
-} from '/src/gameStore';
+import store, { playRandomHit, createTarget, createParticle } from '/src/gameStore';
 import cursorUrl from '/src/assets/cursor.png';
-import ButtonVue from './Button.vue';
+import { computed, onMounted } from 'vue';
 
-const emit = defineEmit({
-   targetClick: null,
-});
+const cursorURL = computed(() => cursorUrl); // Needed for css
 
-createTarget();
-const log = (e: MouseEvent) => console.log(e);
+const emit = defineEmits<{
+  (e: 'targetClick'): void;
+}>();
+
+onMounted(createTarget);
+
+function handleClick() {
+  if (!store.target) return;
+
+  store.slash = { ...store.target };
+
+  playRandomHit();
+  createParticle({ ...store.target });
+  emit('targetClick');
+
+  store.score++;
+  store.progress = 100;
+  store.target = null;
+
+  setTimeout(createTarget);
+}
 </script>
+
+<template>
+  <div class="shoot-wrapper">
+    <div
+      v-if="store.target"
+      @mousedown="handleClick"
+      @touchstart="handleClick"
+      :style="{
+        left: store.target.x + '%',
+        top: store.target.y + '%',
+        width: '25px',
+        height: '25px',
+        backgroundColor: 'var(--purple)',
+        boxShadow: '0px 0px 18px 1px var(--purple)',
+        position: 'absolute',
+      }"
+      class="target"
+    />
+
+    <SlashVue
+      v-if="store.slash"
+      @done="() => (store.slash = null)"
+      :style="{
+        left: store.slash.x + '%',
+        top: store.slash.y + '%',
+        transform: `rotate(${Math.random() * (100 - -100) + -100}deg)`,
+      }"
+    />
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .shoot-wrapper {
-   width: 500px;
-   height: 500px;
-   border: 4px solid var(--yellow);
-   box-shadow: /*0px 0px 15px 1px */ var(/*--yellow*/ --box-shadow);
-   overflow: hidden;
-   position: relative;
-   margin: 0 auto;
+  width: 500px;
+  height: 500px;
+  border: 4px solid var(--yellow);
+  box-shadow: /*0px 0px 15px 1px */ var(/*--yellow*/ --box-shadow);
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  cursor: url(v-bind('cursorURL')), auto !important;
 }
 @media screen and (max-width: 750px) {
-   .shoot-wrapper {
-      width: 275px;
-      height: 275px;
-      margin-top: 15px;
-   }
+  .shoot-wrapper {
+    width: 275px;
+    height: 275px;
+    margin-top: 15px;
+  }
 }
 </style>
